@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ResultLab;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Pasien;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
@@ -14,10 +15,17 @@ class ResultLabController extends Controller
     public function index()
     {
         $resultLabs = ResultLab::with(['lab', 'user', 'kunjungan'])->orderBy('id', 'desc')->get();
+        $pasienId = $resultLabs->pluck('kunjungan.pasien_id')->unique();
+        $pasien = Pasien::whereIn('id', $pasienId)->get();
+
+        $resultLabs = $resultLabs->map(function ($resultLab) use ($pasien) {
+            $resultLab->pasien = $pasien->firstWhere('id', $resultLab->kunjungan->pasien_id);
+            return $resultLab;
+        });
 
         return response()->json([
             'status' => 'success',
-            'data' => $resultLabs
+            'data' => $resultLabs,
         ]);
     }
 
