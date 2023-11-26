@@ -14,7 +14,7 @@ class ResultLabController extends Controller
 {
     public function index()
     {
-        $resultLabs = ResultLab::with(['lab', 'user', 'kunjungan'])->orderBy('id', 'asc')->get();
+        $resultLabs = ResultLab::with(['lab', 'user', 'kunjungan'])->orderBy('id', 'ascgit ')->get();
         $pasienId = $resultLabs->pluck('kunjungan.pasien_id')->unique();
         $pasien = Pasien::whereIn('id', $pasienId)->get();
 
@@ -67,6 +67,10 @@ class ResultLabController extends Controller
         }
 
         $resultLab->load(['user', 'lab', 'kunjungan']);
+        $pasienId = $resultLab->kunjungan->pasien_id;
+        $resultLab->pasien = Pasien::find($pasienId);
+
+
         return response()->json([
             'status' => 'success',
             'data' => $resultLab
