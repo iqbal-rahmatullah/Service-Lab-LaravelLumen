@@ -32,3 +32,5 @@ $router->group(['prefix' => 'resultslab'], function () use ($router) {
     $router->delete('/{id}', 'ResultLabController@destroy');
     $router->get('/{id}', 'ResultLabController@show');
 });
+
+$router->get('/dokters', 'DokterController@index');
