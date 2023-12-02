@@ -24,10 +24,6 @@ $app = new Laravel\Lumen\Application(
 );
 
 
-class_alias('Maatwebsite\Excel\Facades\Excel', 'Excel');
-$app->withFacades();
-$app->register('Maatwebsite\Excel\ExcelServiceProvider');
-
 $app->withEloquent();
 
 /*
