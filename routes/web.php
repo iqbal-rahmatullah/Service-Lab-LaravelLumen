@@ -28,7 +28,7 @@ $router->group(['prefix' => 'labs'], function () use ($router) {
 $router->group(['prefix' => 'resultslab'], function () use ($router) {
     $router->get('', 'ResultLabController@index');
     $router->post('', 'ResultLabController@store');
-    $router->put('/{id}', 'ResultLabController@update');
+    $router->post('/{id}', 'ResultLabController@update');
     $router->delete('/{id}', 'ResultLabController@destroy');
     $router->get('/{id}', 'ResultLabController@show');
 });
